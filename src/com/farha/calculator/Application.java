@@ -12,7 +12,7 @@ public class Application {
         // Infinite loop to keep the calculator running until 'exit' is entered
         while (true) {
             // Prompt the user to enter an operation
-            System.out.println("Enter operation (+, -, *, /, !, ^, sqrt, sin, cos, tan) or 'exit' to quit:");
+            System.out.println("Enter operation (+, -, *, /, !, ^, sqrt, sin, cos, tan, permutations) or 'exit' to quit:");
             String operation = userInput.next();
 
             // Check if the user wants to exit
@@ -98,6 +98,21 @@ public class Application {
                     System.out.println("Result: " + tan(angleTan));
                     break;
 
+                case "permutations":
+                    System.out.println("Enter the first permutation number:");
+                    int totalElements = userInput.nextInt();
+                    System.out.println("Enter the second permutation number:");
+                    int selectedItems = userInput.nextInt();
+                    // Validate input for permutation calculation
+                    if (selectedItems > totalElements || totalElements < 0 || selectedItems < 0) {
+                        System.out.println("Error: Invalid input!");
+                    } else {
+                        // Calculate permutations using both methods and display results
+                        System.out.println("Recursive Result: " + permutationRecursive(totalElements, selectedItems));
+                        System.out.println("Iterative Result: " + permutationIterative(totalElements, selectedItems));
+                    }
+                    break;
+
                 default:
                     // Handle invalid operations
                     System.out.println("Invalid operation.");
@@ -111,30 +126,30 @@ public class Application {
 
     // Add two numbers
     public static double add(double num1, double num2) {
-        return num1 + num2; // Return the sum
+        return num1 + num2; 
     }
 
     // Subtract the second number from the first
     public static double subtract(double num1, double num2) {
-        return num1 - num2; // Return the difference
+        return num1 - num2; 
     }
 
     // Multiply two numbers
     public static double multiply(double num1, double num2) {
-        return num1 * num2; // Return the product
+        return num1 * num2; 
     }
 
     // Divide the first number by the second
     public static double divide(double num1, double num2) {
-        return num1 / num2; // Return the quotient
+        return num1 / num2; 
     }
 
     // Calculate the factorial of a number
     public static double factorial(double num) {
         if (num <= 1) {
-            return 1; // Base case: factorial of 0 or 1 is 1
+            return 1; 
         } else {
-            return num * factorial(num - 1); // Recursive case
+            return num * factorial(num - 1); 
         }
     }
 
@@ -161,5 +176,22 @@ public class Application {
     // Calculate the tangent of an angle in degrees
     public static double tan(double angleDegrees) {
         return Math.tan(Math.toRadians(angleDegrees)); // Convert angle to radians and return the tangent value
+    }
+
+    // Recursive method to calculate the number of permutations
+    public static long permutationRecursive(int totalElements, int selectedItems) {
+        if (selectedItems == 0) {
+            return 1; // Base case: If no items are selected, there's only one way to do nothing
+        }
+        return totalElements * permutationRecursive(totalElements - 1, selectedItems - 1);
+    }
+
+    // Iterative method to calculate the number of permutations
+    public static long permutationIterative(int totalElements, int selectedItems) {
+        long result = 1;
+        for (int i = 0; i < selectedItems; i++) {
+            result *= (totalElements - i);
+        }
+        return result;
     }
 }
